@@ -16,6 +16,7 @@ module.exports.request = async(url, method, body = null) => {
         return Response(await jira.status, await jira.text())
     }
     catch (error){
-        return generateError(error)
+        console.error(error)
+        throw error
     }
 }
