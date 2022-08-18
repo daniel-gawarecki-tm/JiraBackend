@@ -1,6 +1,6 @@
 service: jirabackend
 
-#app: jirabackend-serverless
+app: jirabackend-serverless
 frameworkVersion: '2'
 
 provider:

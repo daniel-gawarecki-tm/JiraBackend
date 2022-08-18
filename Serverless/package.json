@@ -1,5 +1,6 @@
 {
   "name": "jirabackend",
+  "type": "commonjs",
   "version": "1.0.0",
   "description": "Backend for Jira",
   "main": "handler.js",
@@ -10,9 +11,8 @@
     "Jira",
     "Serverless"
   ],
-  "dependencies": {
-    "node-fetch": "^2.6.7",
-    "serverless-offline": "^9.2.4",
+  "devDependencies": {
+    "serverless-offline": "^8.3.1",
     "serverless-offline-ssm": "^6.2.0"
   },
   "author": "Adharsh RJ",
