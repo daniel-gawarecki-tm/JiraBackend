@@ -1,0 +1,20 @@
+{
+  "name": "jirabackend",
+  "version": "1.0.0",
+  "description": "Backend for Jira",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Jira",
+    "Serverless"
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "serverless-offline": "^9.2.4",
+    "serverless-offline-ssm": "^6.2.0"
+  },
+  "author": "Adharsh RJ",
+  "license": "ISC"
+}

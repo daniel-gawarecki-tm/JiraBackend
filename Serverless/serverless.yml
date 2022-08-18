@@ -1,0 +1,93 @@
+service: jirabackend
+
+#app: jirabackend-serverless
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'offline'}
+  region: ${opt:region, 'us-east-1'}
+  tracing:
+    lambda: true
+  environment:
+    url: ${ssm:/jirabackendServerless/${self:provider.stage}/${self:provider.region}/url~true}
+    username: ${ssm:/jirabackendServerless/${self:provider.stage}/${self:provider.region}/username~true}
+    token: ${ssm:/jirabackendServerless/${self:provider.stage}/${self:provider.region}/token~true}
+
+functions:
+  createjira:
+    handler: handler.createjira
+    events:
+      - http:
+          path: v1/JIRA
+          method: post
+  deletejira:
+    handler: handler.deletejira
+    events:
+      - http:
+          path: v1/JIRA
+          method: delete
+  updatejira:
+    handler: handler.updatejira
+    events:
+      - http:
+          path: v1/JIRA
+          method: put
+  getjira:
+    handler: handler.getjira
+    events:
+      - http:
+          path: v1/JIRA
+          method: get
+  statusjira:
+    handler: handler.statusjira
+    events:
+      - http:
+          path: v1/JIRA/status
+          method: post
+  getstatus:
+    handler: handler.getstatus
+    events:
+      - http:
+          path: v1/JIRA/status
+          method: get
+
+plugins:
+  - serverless-offline
+  - serverless-offline-ssm
+
+resources:
+  Resources:
+    authorizerRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: "auth-role-${self:provider.stage}-${self:provider.region}"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "lambda.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        ManagedPolicyArns:
+          - "arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess"
+          - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+          - "arn:aws:iam::aws:policy/AWSXrayFullAccess"
+
+custom:
+  output:
+    file: stackOutput.json
+  stage: ${opt:stage, 'offline'}
+  serverless-offline:
+    httpPort: 3003
+  serverless-offline-ssm:
+    stages:
+      - offline
+    ssm:
+      /jirabackendServerless/offline/us-east-1/url: 'https://toyotaconnected.atlassian.net'
+      /jirabackendServerless/offline/us-east-1/username: adharsh.jayasree@toyota.com
+      /jirabackendServerless/offline/us-east-1/token: PyLh7gZn8DySIpdCIJU68D33
