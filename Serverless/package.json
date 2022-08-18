@@ -4,6 +4,15 @@
   "version": "1.0.0",
   "description": "Backend for Jira",
   "main": "handler.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adharshrj/JiraBackend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adharshrj/JiraBackend/issues"
+  },
+  "homepage": "https://github.com/adharshrj/JiraBackend#readme",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
